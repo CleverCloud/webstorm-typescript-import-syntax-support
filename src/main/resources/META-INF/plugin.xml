@@ -1,0 +1,66 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.clevercloud.typescript.import.support</id>
+    <name>TypeScript Import Syntax Support</name>
+    <vendor email="support@clever-cloud.com" url="https://www.clever-cloud.com">Clever Cloud</vendor>
+
+    <!-- A displayed Markdown description of the plugin. -->
+    <description><![CDATA[
+<h1>TypeScript @import Syntax Support</h1>
+
+<p>Adds navigation and documentation support for TypeScript's <code>@import</code> comment-based type imports in JavaScript and TypeScript files.</p>
+
+<h2>Features</h2>
+<ul>
+  <li><strong>Type Navigation:</strong> Ctrl+Click (Cmd+Click on Mac) on imported types to jump to their definitions</li>
+  <li><strong>File Navigation:</strong> Navigate to imported modules by clicking on the import path</li>
+  <li><strong>Type Hints:</strong> Hover over imported types to see their definitions and documentation</li>
+  <li><strong>Multiple Imports:</strong> Support for multiple <code>@import</code> statements in a single comment block</li>
+  <li><strong>Transitive Imports:</strong> Automatically resolve types re-exported through multiple files</li>
+  <li><strong>Relative Paths:</strong> Full support for relative paths (<code>./</code>, <code>../</code>)</li>
+</ul>
+
+<h2>Usage</h2>
+<p>Use TypeScript's <code>@import</code> syntax in your JavaScript files:</p>
+<pre><code>/**
+ * @import {User, Role} from './types.d.ts'
+ * @import {IconModel} from '../common/types.d.ts'
+ */
+
+/** @type {User} */
+const user = { name: "John" };
+</code></pre>
+
+<h2>Supported Scenarios</h2>
+<ul>
+  <li>TypeScript interfaces and type aliases</li>
+  <li>Named imports with aliases (<code>Type as Alias</code>)</li>
+  <li>Parent directory (<code>../</code>) and subdirectory imports</li>
+  <li>Transitive type resolution through re-exports</li>
+  <li>Multiple types from the same module</li>
+</ul>
+  ]]></description>
+
+    <change-notes><![CDATA[
+      <h3>1.0.0</h3>
+      <ul>
+        <li>Initial release</li>
+        <li>Type and module path navigation with Ctrl+Click</li>
+        <li>Hover documentation for imported types</li>
+        <li>Support for multiple @import statements per comment block</li>
+        <li>Transitive import resolution across files</li>
+        <li>Full relative path support</li>
+      </ul>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>JavaScript</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- TypeScript @import syntax support -->
+        <psi.referenceContributor language="JavaScript"
+                                  implementation="com.clevercloud.typescript.import.support.TypeScriptImportReferenceProvider"/>
+        <lang.documentationProvider language="JavaScript"
+                                    implementationClass="com.clevercloud.typescript.import.support.TypeScriptImportDocumentationProvider"/>
+    </extensions>
+</idea-plugin>
